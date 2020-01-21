@@ -1,1 +1,1 @@
-ktane-echolocation
+#[ModKit Wiki](../../wiki)
