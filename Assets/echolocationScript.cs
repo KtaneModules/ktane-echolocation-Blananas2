@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using KModkit;
+using System.Text.RegularExpressions;
 
 public class echolocationScript : MonoBehaviour {
 
@@ -21,7 +22,7 @@ public class echolocationScript : MonoBehaviour {
     int moduleId;
     private bool moduleSolved;
 
-    public List<string> mazes = new List<string> {"┌─┐┌─˂│┌┘└─┐│└┐┌─┤│˃┴┘˃┤├─┐┌˂│└˂└┘˃┘", "˃┬˂┌┬˂┌┘┌┘└┐│┌┘┌─┤├┘┌┘˅││˅│┌┘│˄└┘└─┘", "┌─┐˅┌┐˄˅│└┘│┌┤│┌┐││││││││└┘│││└──┘└┘", "┌┐˃──┐││┌──┤│└┘┌˂││˃─┴─┤├───┐│└─˂˃┘˄", "˃───┬┐┌──┬┘˄├┐˃┘┌┐│└─┐˄││┌─┴˂│˄└───┘", "˅┌┐˃┬┐│││┌┘│├┘˄│┌┘└┐┌┤│˅┌┘˄│└┤└──┘˃┘", "┌──┐┌┐│┌˂└┘│└┘┌˂┌┘┌┐├─┘˅│˄└─┐│└───┴┘", "˅┌─┐┌┐├┴˂└┘││┌──┐││└┐˃┴┘│˅└──˂└┴───˂", "˅┌──┬┐││┌˂││├┴┘┌┘││˅┌┘˃┤│││┌┐˄└┘└┘└˂", "┌──┬─┐│┌┐│┌┘└┘˄││˅┌┐┌┘└┤│└┘˃┐│└───┘˄", "˃─┬┬─┐┌┐││┌┘││˄│└˂│└┐└─┐│˃┴──┤└──˂˃┘", "┌────┐└┐┌─˂│┌┘└┐┌┤└─┐││˄┌˂└┤└┐└──┴˂˄", "┌┐┌┬─˂˄└┤└─┐┌┐˄┌─┤│└┬┘˅│├┐˄┌┘│˄└─┘˃┘", "┌─┐˃┬┐│˅└┐│˄│└┬┘└┐└┐└─┐│˅│˅┌┘│└┘└┴─┘", "┌────┐│˃─┬┐││┌─┤˄│└┘┌┘˅│┌˂└┐└┘└──┴─˂", "┌───┬┐˄┌─┐│˄┌┘˅│├┐│┌┤│˄││˄│└┐│└˂└─┴┘", "┌─┬┐┌┐└˂│└┘│┌─┘┌─┘│┌┐│┌˂│││˄│˅└┘└─┴┘", "┌┐˃┐┌┐˄└┐└┘│┌┐└──┤│└˂┌┐│├┐┌┘││˄└┴˂└┘" };
+    public List<string> mazes = new List<string> { "┌─┐┌─˂│┌┘└─┐│└┐┌─┤│˃┴┘˃┤├─┐┌˂│└˂└┘˃┘", "˃┬˂┌┬˂┌┘┌┘└┐│┌┘┌─┤├┘┌┘˅││˅│┌┘│˄└┘└─┘", "┌─┐˅┌┐˄˅│└┘│┌┤│┌┐││││││││└┘│││└──┘└┘", "┌┐˃──┐││┌──┤│└┘┌˂││˃─┴─┤├───┐│└─˂˃┘˄", "˃───┬┐┌──┬┘˄├┐˃┘┌┐│└─┐˄││┌─┴˂│˄└───┘", "˅┌┐˃┬┐│││┌┘│├┘˄│┌┘└┐┌┤│˅┌┘˄│└┤└──┘˃┘", "┌──┐┌┐│┌˂└┘│└┘┌˂┌┘┌┐├─┘˅│˄└─┐│└───┴┘", "˅┌─┐┌┐├┴˂└┘││┌──┐││└┐˃┴┘│˅└──˂└┴───˂", "˅┌──┬┐││┌˂││├┴┘┌┘││˅┌┘˃┤│││┌┐˄└┘└┘└˂", "┌──┬─┐│┌┐│┌┘└┘˄││˅┌┐┌┘└┤│└┘˃┐│└───┘˄", "˃─┬┬─┐┌┐││┌┘││˄│└˂│└┐└─┐│˃┴──┤└──˂˃┘", "┌────┐└┐┌─˂│┌┘└┐┌┤└─┐││˄┌˂└┤└┐└──┴˂˄", "┌┐┌┬─˂˄└┤└─┐┌┐˄┌─┤│└┬┘˅│├┐˄┌┘│˄└─┘˃┘", "┌─┐˃┬┐│˅└┐│˄│└┬┘└┐└┐└─┐│˅│˅┌┘│└┘└┴─┘", "┌────┐│˃─┬┐││┌─┤˄│└┘┌┘˅│┌˂└┐└┘└──┴─˂", "┌───┬┐˄┌─┐│˄┌┘˅│├┐│┌┤│˄││˄│└┐│└˂└─┴┘", "┌─┬┐┌┐└˂│└┘│┌─┘┌─┘│┌┐│┌˂│││˄│˅└┘└─┴┘", "┌┐˃┐┌┐˄└┐└┘│┌┐└──┤│└˂┌┐│├┐┌┘││˄└┴˂└┘" };
     public List<string> locationNames = new List<string> {"A1", "B1", "C1", "D1", "E1", "F1", "A2", "B2", "C2", "D2", "E2", "F2", "A3", "B3", "C3", "D3", "E3", "F3", "A4", "B4", "C4", "D4", "E4", "F4", "A5", "B5", "C5", "D5", "E5", "F5", "A6", "B6", "C6", "D6", "E6", "F6" };
     public List<string> directionNames = new List<string> {"North", "West", "South", "East" };
     string symbols = "─│┌┐└┘├┤┬┴┼˂˃˄˅"; //
@@ -287,5 +288,46 @@ public class echolocationScript : MonoBehaviour {
             halfSeconds += 1;
             yield return new WaitForSeconds(.5f);
         }
+    }
+
+    //twitch plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} u/d/l/r [Presses the button(s) in the specified position(s)] | !{0} center/c [Presses the center button] | !{0} hold/h [Holds the center button]";
+    #pragma warning restore 414
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        if (Regex.IsMatch(command, @"^\s*hold\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) || Regex.IsMatch(command, @"^\s*h\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            center.OnInteract();
+            yield return new WaitForSeconds(1f);
+            center.OnInteractEnded();
+            yield break;
+        }
+        if (Regex.IsMatch(command, @"^\s*center\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) || Regex.IsMatch(command, @"^\s*c\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            center.OnInteract();
+            center.OnInteractEnded();
+            yield break;
+        }
+        yield return null;
+        string[] valids = { "u", "l", "d", "r" };
+        command = command.Replace(" ","");
+        command = command.ToLower();
+        for (int i = 0; i < command.Length; i++)
+        {
+            if (!valids.Contains(command.ElementAt(i) + ""))
+            {
+                yield return "sendtochaterror The specified position '" + command.ElementAt(i) + "' for a button is not valid!";
+                yield break;
+            }
+        }
+        for (int i = 0; i < command.Length; i++)
+        {
+            moves[Array.IndexOf(valids, command.ElementAt(i) + "")].OnInteract();
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield break;
     }
 }
