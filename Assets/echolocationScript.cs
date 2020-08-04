@@ -175,6 +175,7 @@ public class echolocationScript : MonoBehaviour {
 
     void CenterPress () {
         center.AddInteractionPunch();
+        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BombDrop, transform);
         hitWall = false;
         echoPos = playerPos;
         echoTile = mazes[chosenMaze][echoPos];
@@ -266,6 +267,7 @@ public class echolocationScript : MonoBehaviour {
                 if (validMoves[direction][echoPlace] == 'X') {
                     Audio.PlaySoundAtTransform("wall", transform);
                     hitWall = true;
+                    yield return new WaitForSeconds(3f);
                     playingSound = false;
                 }
             }
@@ -277,7 +279,7 @@ public class echolocationScript : MonoBehaviour {
 
     //twitch plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} u/d/l/r [Presses the button(s) in the specified position(s)] | !{0} center/c [Presses the center button] | !{0} hold/h [Holds the center button]";
+    private readonly string TwitchHelpMessage = @"!{0} u/d/l/r/c [Presses the button(s) in the specified position(s)] | !{0} hold/h [Holds the center button]";
     #pragma warning restore 414
     IEnumerator ProcessTwitchCommand(string command)
     {
@@ -289,15 +291,8 @@ public class echolocationScript : MonoBehaviour {
             center.OnInteractEnded();
             yield break;
         }
-        if (Regex.IsMatch(command, @"^\s*center\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) || Regex.IsMatch(command, @"^\s*c\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
-        {
-            yield return null;
-            center.OnInteract();
-            center.OnInteractEnded();
-            yield break;
-        }
         yield return null;
-        string[] valids = { "u", "l", "d", "r" };
+        string[] valids = { "u", "l", "d", "r", "c"};
         command = command.Replace(" ","");
         command = command.ToLower();
         for (int i = 0; i < command.Length; i++)
@@ -310,9 +305,24 @@ public class echolocationScript : MonoBehaviour {
         }
         for (int i = 0; i < command.Length; i++)
         {
-            moves[Array.IndexOf(valids, command.ElementAt(i) + "")].OnInteract();
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
+            yield return "trycancel The command is cancelled during move #" + i +".";
+            if (command.ElementAt(i) == 'c') 
+            {
+                center.OnInteract();
+                center.OnInteractEnded();
+                yield return new WaitForSeconds(0.2f);
+            }
+            else 
+            {
+                moves[Array.IndexOf(valids, command.ElementAt(i) + "")].OnInteract();
+                yield return new WaitForSeconds(0.2f);
+            }
+            while (playingSound) {
+                yield return new WaitForSeconds(.1f);
+            }
         }
+
         yield break;
     }
 }
