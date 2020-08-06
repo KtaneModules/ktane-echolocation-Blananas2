@@ -175,7 +175,7 @@ public class echolocationScript : MonoBehaviour {
 
     void CenterPress () {
         center.AddInteractionPunch();
-        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BombDrop, transform);
+        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
         hitWall = false;
         echoPos = playerPos;
         echoTile = mazes[chosenMaze][echoPos];
