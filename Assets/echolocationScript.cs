@@ -292,7 +292,7 @@ public class echolocationScript : MonoBehaviour {
             yield break;
         }
         yield return null;
-        string[] valids = { "u", "l", "d", "r", "c"};
+        string[] valids = { "u", "l", "d", "r", "c", "f", "useless", "b"};
         command = command.Replace(" ","");
         command = command.ToLower();
         for (int i = 0; i < command.Length; i++)
@@ -315,7 +315,7 @@ public class echolocationScript : MonoBehaviour {
             }
             else 
             {
-                moves[Array.IndexOf(valids, command.ElementAt(i) + "")].OnInteract();
+                moves[Array.IndexOf(valids, command.ElementAt(i) + "") % 5].OnInteract();
                 yield return new WaitForSeconds(0.2f);
             }
             while (playingSound) {
