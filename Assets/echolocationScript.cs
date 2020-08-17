@@ -291,7 +291,7 @@ public class echolocationScript : MonoBehaviour {
             center.OnInteractEnded();
             yield break;
         }
-        yield return null;
+
         string[] valids = { "u", "l", "d", "r", "c", "f", "useless", "b"};
         command = command.Replace(" ","");
         command = command.ToLower();
@@ -305,16 +305,20 @@ public class echolocationScript : MonoBehaviour {
         }
         for (int i = 0; i < command.Length; i++)
         {
-            yield return null;
-            yield return "trycancel The command is cancelled during move #" + i +".";
             if (command.ElementAt(i) == 'c') 
             {
+                yield return null;
+                yield return "trycancel The command is cancelled during move #" + (i+1) +".";
+                if (command.Length > 1) yield return "strikemessage input #" + (i+1);
                 center.OnInteract();
                 center.OnInteractEnded();
                 yield return new WaitForSeconds(0.2f);
             }
             else 
             {
+                yield return null;
+                yield return "trycancel The command is cancelled during move #" + (i+1) +".";
+                if (command.Length > 1) yield return "strikemessage input #" + (i+1);
                 moves[Array.IndexOf(valids, command.ElementAt(i) + "") % 5].OnInteract();
                 yield return new WaitForSeconds(0.2f);
             }
@@ -322,7 +326,6 @@ public class echolocationScript : MonoBehaviour {
                 yield return new WaitForSeconds(.1f);
             }
         }
-
         yield break;
     }
 }
