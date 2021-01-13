@@ -16,6 +16,7 @@ public class echolocationScript : MonoBehaviour {
 
     public Material white;
     public GameObject actualModule;
+    public GameObject actualButtons;
 
     //Logging
     static int moduleIdCounter = 1;
@@ -217,6 +218,7 @@ public class echolocationScript : MonoBehaviour {
                 moves[2].GetComponent<MeshRenderer>().material = white;
                 moves[3].GetComponent<MeshRenderer>().material = white;
                 center.GetComponent<MeshRenderer>().material = white;
+                actualButtons.gameObject.SetActive(false);
                 GetComponent<KMBombModule>().HandlePass();
                 Audio.PlaySoundAtTransform("win", transform);
             } else {
@@ -305,7 +307,7 @@ public class echolocationScript : MonoBehaviour {
         }
         for (int i = 0; i < command.Length; i++)
         {
-            if (command.ElementAt(i) == 'c') 
+            if (command.ElementAt(i) == 'c')
             {
                 yield return null;
                 yield return "trycancel The command is cancelled during move #" + (i+1) +".";
@@ -314,7 +316,7 @@ public class echolocationScript : MonoBehaviour {
                 center.OnInteractEnded();
                 yield return new WaitForSeconds(0.2f);
             }
-            else 
+            else
             {
                 yield return null;
                 yield return "trycancel The command is cancelled during move #" + (i+1) +".";
