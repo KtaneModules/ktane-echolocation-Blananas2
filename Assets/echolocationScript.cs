@@ -23,13 +23,15 @@ public class echolocationScript : MonoBehaviour {
     int moduleId;
     private bool moduleSolved;
 
-    public List<string> mazes = new List<string> { "┌─┐┌─˂│┌┘└─┐│└┐┌─┤│˃┴┘˃┤├─┐┌˂│└˂└┘˃┘", "˃┬˂┌┬˂┌┘┌┘└┐│┌┘┌─┤├┘┌┘˅││˅│┌┘│˄└┘└─┘", "┌─┐˅┌┐˄˅│└┘│┌┤│┌┐││││││││└┘│││└──┘└┘", "┌┐˃──┐││┌──┤│└┘┌˂││˃─┴─┤├───┐│└─˂˃┘˄", "˃───┬┐┌──┬┘˄├┐˃┘┌┐│└─┐˄││┌─┴˂│˄└───┘", "˅┌┐˃┬┐│││┌┘│├┘˄│┌┘└┐┌┤│˅┌┘˄│└┤└──┘˃┘", "┌──┐┌┐│┌˂└┘│└┘┌˂┌┘┌┐├─┘˅│˄└─┐│└───┴┘", "˅┌─┐┌┐├┴˂└┘││┌──┐││└┐˃┴┘│˅└──˂└┴───˂", "˅┌──┬┐││┌˂││├┴┘┌┘││˅┌┘˃┤│││┌┐˄└┘└┘└˂", "┌──┬─┐│┌┐│┌┘└┘˄││˅┌┐┌┘└┤│└┘˃┐│└───┘˄", "˃─┬┬─┐┌┐││┌┘││˄│└˂│└┐└─┐│˃┴──┤└──˂˃┘", "┌────┐└┐┌─˂│┌┘└┐┌┤└─┐││˄┌˂└┤└┐└──┴˂˄", "┌┐┌┬─˂˄└┤└─┐┌┐˄┌─┤│└┬┘˅│├┐˄┌┘│˄└─┘˃┘", "┌─┐˃┬┐│˅└┐│˄│└┬┘└┐└┐└─┐│˅│˅┌┘│└┘└┴─┘", "┌────┐│˃─┬┐││┌─┤˄│└┘┌┘˅│┌˂└┐└┘└──┴─˂", "┌───┬┐˄┌─┐│˄┌┘˅│├┐│┌┤│˄││˄│└┐│└˂└─┴┘", "┌─┬┐┌┐└˂│└┘│┌─┘┌─┘│┌┐│┌˂│││˄│˅└┘└─┴┘", "┌┐˃┐┌┐˄└┐└┘│┌┐└──┤│└˂┌┐│├┐┌┘││˄└┴˂└┘" };
-    public List<string> niceMazes = new List<string> { "██████████████     █     ██ ███ █ ██████ █   █     ██ █ ███████ ██ █   █     ██ ███ █ ███ ██ █     █   ██ █████████ ██     █   █ ██ ███ █ ███ ██   █   █   ██████████████", "██████████████     █     ████ ███ █ ████   █   █   ██ ███ █████ ██ █   █     ██ █ ███ ███ ██   █   █ █ ██ ███ ███ █ ██ █ █ █   █ ██ █ █ █ ███ ██ █   █     ██████████████", "██████████████     █ █   ██ ███ █ █ █ ██ █ █ █   █ ████ █ █████ ██   █ █   █ ██ █ █ █ █ █ ██ █ █ █ █ █ ██ █ █ █ █ █ ██ █   █ █ █ ██ █████ █ █ ██       █   ██████████████", "██████████████   █       ██ █ ███████ ██ █ █       ██ █ █ █████ ██ █   █   █ ██ █████ ███ ██ █         ██ █████████ ██         █ ██ ███████ █ ██     █   █ ██████████████", "██████████████           ██████████ █ ██         █ ██ █████ ██████   █   █   ██ █ █████ █ ██ █     █ █ ██ █████ ███ ██ █       █ ██ █ ███████ ██ █         ██████████████", "██████████████ █   █     ██ █ █ ███ █ ██ █ █ █   █ ██ █ █ █ ███ ██   █ █ █   ██ █████ █ ████   █   █ █ ████ █ █ █ █ ██   █ █ █   ██ █████ ███ ██       █   ██████████████", "██████████████       █   ██ █████ █ █ ██ █   █   █ ██ █ ███████ ██   █   █   ██████ ███ ████   █     █ ██ █ █ █████ ██ █ █     █ ██ ███████ █ ██           ██████████████", "██████████████ █     █   ██ █ ███ █ █ ██     █   █ ██ █████████ ██ █       █ ██ █ █████ █ ██ █   █     ██ ███ ████████ █ █       ██ █ ██████████           ██████████████", "██████████████ █         ██ █ █████ █ ██ █ █   █ █ ██ █ █ ███ █ ██     █   █ ██ █████ ███ ██ █ █   █   ██ █ █ █████ ██ █ █ █   █ ██ █ █ █ █ ████   █   █   ██████████████", "██████████████           ██ █████ ███ ██ █   █ █   ██ █ █ █ █ ████   █ █ █ █ ████████ █ █ ██   █   █   ██ █ █ █████ ██ █   █   █ ██ ███████ █ ██         █ ██████████████", "██████████████           ██████ █ ███ ██   █ █ █   ██ █ █ █ █ ████ █ █ █ █   ██ █ ███ ██████ █   █     ██ ███ █████ ██ █         ██ █████████ ██       █   ██████████████", "██████████████           ██ █████████ ██   █     █ ████ █ █████ ██   █   █   ██ █████ █ █ ██     █ █ █ ██████ █ █ ████   █   █   ██ █████ ███ ██         █ ██████████████", "██████████████   █       ██ █ █ █ ██████ █   █     ██████ █████ ██   █ █     ██ █ ███ ███ ██ █     █ █ ██ ███ ███ █ ██   █ █   █ ██ █ ███ ███ ██ █     █   ██████████████", "██████████████     █     ██ ███ ███ █ ██ █ █   █ █ ██ █ ███ █ ████ █     █   ██ ███ █████ ██   █     █ ████ █████ █ ██ █ █ █   █ ██ █ █ █ ███ ██   █       ██████████████", "██████████████           ██ █████████ ██ █       █ ██ █████ █ █ ██ █     █ █ ██ █ ███ ███ ██   █   █ █ ██████ ███ █ ██   █   █   ██ █████ ██████           ██████████████", "██████████████           ██ ███████ █ ██ █     █ █ ████ ███ █ ████   █ █ █   ██ ███ █ █ █ ██ █   █ █ █ ██ █ █ █ ███ ██ █ █ █   █ ██ ███ ███ █ ██   █       ██████████████", "██████████████       █   ██ ███ █ █ █ ██   █ █   █ ██████ █████ ██     █     ██ █████ ██████ █   █ █   ██ █ █ █ █ ████ █ █ █ █ █ ██ █ █ ███ █ ██   █       ██████████████", "██████████████   █   █   ██ █ ███ █ █ ██ █   █   █ ██████ █████ ██   █       ██ █ ███████ ██ █   █   █ ██ █████ █ █ ██   █   █ █ ██ █ █ ███ █ ██ █     █   ██████████████" };
-    public List<string> locationNames = new List<string> {"A1", "B1", "C1", "D1", "E1", "F1", "A2", "B2", "C2", "D2", "E2", "F2", "A3", "B3", "C3", "D3", "E3", "F3", "A4", "B4", "C4", "D4", "E4", "F4", "A5", "B5", "C5", "D5", "E5", "F5", "A6", "B6", "C6", "D6", "E6", "F6" };
-    public List<string> directionNames = new List<string> {"North", "West", "South", "East" };
+    private int size = 4;
+
+    private string[,] maze;
+    string smaze = "";
+    string xmaze = "";
+
+    private List<string> directionNames = new List<string> {"North", "West", "South", "East" };
     string symbols = "─│┌┐└┘├┤┬┴┼˂˃˄˅";
-    public List<string> validMoves = new List<string> {"X.XX....X..XX.X", ".XX.X.X....X.XX", "X...XX...X.XXX.", ".X.X.X.X....XXX" };
-    int chosenMaze = -1;
+    private List<string> validMoves = new List<string> {"X.XX....X..XX.X", ".XX.X.X.....XXX", "X...XX...X.XXX.", ".X.X.X.X...X.XX" };
     int playerPos = -1;
     int keyPos = -1;
     int exitPos = -1;
@@ -65,22 +67,26 @@ public class echolocationScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        chosenMaze = UnityEngine.Random.Range(0, 18);
-        playerPos = UnityEngine.Random.Range(0, 36);
-        keyPos = UnityEngine.Random.Range(0, 36);
-        exitPos = UnityEngine.Random.Range(0, 36);
+        if (size < 2 || size > 26) {
+            size = 4;
+        }
+
+        playerPos = UnityEngine.Random.Range(0, size*size);
+        keyPos = UnityEngine.Random.Range(0, size*size);
+        exitPos = UnityEngine.Random.Range(0, size*size);
         direction = UnityEngine.Random.Range(0, 4);
         if (keyPos == exitPos) {
             exitPos = 35 - keyPos;
         }
 
-        Debug.LogFormat("[Echolocation #{0}] Maze:", moduleId);
-        for (int i = 0; i < 13; i++) {
-            Debug.LogFormat("[Echolocation #{0}] {1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}", moduleId, niceMazes[chosenMaze][(13 * i) + 0], niceMazes[chosenMaze][(13 * i) + 1], niceMazes[chosenMaze][(13 * i) + 2], niceMazes[chosenMaze][(13 * i) + 3], niceMazes[chosenMaze][(13 * i) + 4], niceMazes[chosenMaze][(13 * i) + 5], niceMazes[chosenMaze][(13 * i) + 6], niceMazes[chosenMaze][(13 * i) + 7], niceMazes[chosenMaze][(13 * i) + 8], niceMazes[chosenMaze][(13 * i) + 9], niceMazes[chosenMaze][(13 * i) + 10], niceMazes[chosenMaze][(13 * i) + 11], niceMazes[chosenMaze][(13 * i) + 12]);
-        }
-        Debug.LogFormat("[Echolocation #{0}] Player Position: {1}", moduleId, locationNames[playerPos]);
-        Debug.LogFormat("[Echolocation #{0}] Key Position: {1}", moduleId, locationNames[keyPos]);
-        Debug.LogFormat("[Echolocation #{0}] Exit Position: {1}", moduleId, locationNames[exitPos]);
+        maze = MazeGenerator.GenerateMaze(size, size);
+        smaze = MazeToString(maze);
+        xmaze = smaze.Replace("\n", "");
+        Debug.LogFormat("[Echolocation #{0}] Maze:\n{1}", moduleId, smaze);
+
+        Debug.LogFormat("[Echolocation #{0}] Player Position: {1}", moduleId, LocationName(playerPos));
+        Debug.LogFormat("[Echolocation #{0}] Key Position: {1}", moduleId, LocationName(keyPos));
+        Debug.LogFormat("[Echolocation #{0}] Exit Position: {1}", moduleId, LocationName(exitPos));
         Debug.LogFormat("[Echolocation #{0}] Player Direction: {1}", moduleId, directionNames[direction]);
         Debug.LogFormat("[Echolocation #{0}] Moves:", moduleId);
 	}
@@ -92,66 +98,66 @@ public class echolocationScript : MonoBehaviour {
             if (move == moves[0]) { //U
                 switch (direction) {
                     case 0: //u
-                        if (playerPos < 6) {
+                        if (playerPos < size) {
                             GetComponent<KMBombModule>().HandleStrike();
-                            Debug.LogFormat("[Echolocation #{0}] U) Can't go north from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                            Debug.LogFormat("[Echolocation #{0}] U) Can't go north from {1}, STRIKE!", moduleId, LocationName(playerPos));
                         } else {
-                            tile = mazes[chosenMaze][playerPos];
+                            tile = xmaze[playerPos];
                             tilePlace = symbols.IndexOf(tile);
                             if (validMoves[direction][tilePlace] == '.') {
-                                playerPos -= 6;
-                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, locationNames[playerPos]);
+                                playerPos -= size;
+                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, LocationName(playerPos));
                             } else {
                                 GetComponent<KMBombModule>().HandleStrike();
-                                Debug.LogFormat("[Echolocation #{0}] U) Can't go north from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Can't go north from {1}, STRIKE!", moduleId, LocationName(playerPos));
                             }
                         }
                         break;
                     case 1: //l
-                        if (playerPos % 6 == 0) {
+                        if (playerPos % size == 0) {
                             GetComponent<KMBombModule>().HandleStrike();
-                            Debug.LogFormat("[Echolocation #{0}] U) Can't go west from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                            Debug.LogFormat("[Echolocation #{0}] U) Can't go west from {1}, STRIKE!", moduleId, LocationName(playerPos));
                         } else {
-                            tile = mazes[chosenMaze][playerPos];
+                            tile = xmaze[playerPos];
                             tilePlace = symbols.IndexOf(tile);
                             if (validMoves[direction][tilePlace] == '.') {
                                 playerPos -= 1;
-                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, LocationName(playerPos));
                             } else {
                                 GetComponent<KMBombModule>().HandleStrike();
-                                Debug.LogFormat("[Echolocation #{0}] U) Can't go west from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Can't go west from {1}, STRIKE!", moduleId, LocationName(playerPos));
                             }
                         }
                         break;
                     case 2: //d
-                        if (29 < playerPos) {
+                        if ((size*(size-1))-1  < playerPos) {
                             GetComponent<KMBombModule>().HandleStrike();
-                            Debug.LogFormat("[Echolocation #{0}] U) Can't go south from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                            Debug.LogFormat("[Echolocation #{0}] U) Can't go south from {1}, STRIKE!", moduleId, LocationName(playerPos));
                         } else {
-                            tile = mazes[chosenMaze][playerPos];
+                            tile = xmaze[playerPos];
                             tilePlace = symbols.IndexOf(tile);
                             if (validMoves[direction][tilePlace] == '.') {
-                                playerPos += 6;
-                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, locationNames[playerPos]);
+                                playerPos += size;
+                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, LocationName(playerPos));
                             } else {
                                 GetComponent<KMBombModule>().HandleStrike();
-                                Debug.LogFormat("[Echolocation #{0}] U) Can't go south from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Can't go south from {1}, STRIKE!", moduleId, LocationName(playerPos));
                             }
                         }
                         break;
                     case 3: //r
-                        if (playerPos % 6 == 5) {
+                        if (playerPos % size == size-1) {
                             GetComponent<KMBombModule>().HandleStrike();
-                            Debug.LogFormat("[Echolocation #{0}] U) Can't go east from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                            Debug.LogFormat("[Echolocation #{0}] U) Can't go east from {1}, STRIKE!", moduleId, LocationName(playerPos));
                         } else {
-                            tile = mazes[chosenMaze][playerPos];
+                            tile = xmaze[playerPos];
                             tilePlace = symbols.IndexOf(tile);
                             if (validMoves[direction][tilePlace] == '.') {
                                 playerPos += 1;
-                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Current Location: {1}", moduleId, LocationName(playerPos));
                             } else {
                                 GetComponent<KMBombModule>().HandleStrike();
-                                Debug.LogFormat("[Echolocation #{0}] U) Can't go east from {1}, STRIKE!", moduleId, locationNames[playerPos]);
+                                Debug.LogFormat("[Echolocation #{0}] U) Can't go east from {1}, STRIKE!", moduleId, LocationName(playerPos));
                             }
                         }
                         break;
@@ -179,7 +185,7 @@ public class echolocationScript : MonoBehaviour {
         GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
         hitWall = false;
         echoPos = playerPos;
-        echoTile = mazes[chosenMaze][echoPos];
+        echoTile = xmaze[echoPos];
         halfSeconds = 0;
         startEcho = StartCoroutine(Echo());
 
@@ -237,20 +243,20 @@ public class echolocationScript : MonoBehaviour {
             if (halfSeconds % 2 == 0 && halfSeconds != 0) {
                 switch (direction) {
                     case 0: //u
-                        echoPos = echoPos - 6;
-                        echoTile = mazes[chosenMaze][echoPos];
+                        echoPos = echoPos - size;
+                        echoTile = xmaze[echoPos];
                         break;
                     case 1: //l
                         echoPos = echoPos - 1;
-                        echoTile = mazes[chosenMaze][echoPos];
+                        echoTile = xmaze[echoPos];
                         break;
                     case 2: //d
-                        echoPos = echoPos + 6;
-                        echoTile = mazes[chosenMaze][echoPos];
+                        echoPos = echoPos + size;
+                        echoTile = xmaze[echoPos];
                         break;
                     case 3: //r
                         echoPos = echoPos + 1;
-                        echoTile = mazes[chosenMaze][echoPos];
+                        echoTile = xmaze[echoPos];
                         break;
                     default:
                     Debug.LogFormat("[Echolocation #{0}] Bug found, let Blan know immediately. (Echo coroutine reached the bottom of direction switch statement)", moduleId);
@@ -277,6 +283,88 @@ public class echolocationScript : MonoBehaviour {
             halfSeconds += 1;
             yield return new WaitForSeconds(.5f);
         }
+    }
+
+    //KINGBRANBRAN'S CODE BY THE WAY
+    private string MazeToString(string[,] maze)
+	{
+		var mazeString = "";
+		for (var h = 0; h < maze.GetLength(1); h++)
+		{
+			for (var w = 0; w < maze.GetLength(0); w++)
+			{
+				mazeString += maze[w, h] + " ";
+			}
+
+			mazeString += "\n";
+		}
+
+        mazeString = BetterString(mazeString); //ok this is my code though, you can tell bc it sucks
+
+		return mazeString;
+	}
+
+    string BetterString (string s) {
+        s = s.Replace("N", "˄");
+        s = s.Replace("E", "˃");
+        s = s.Replace("W", "˂");
+        s = s.Replace("S", "˅");
+        s = s.Replace("˂˃", "─");
+        s = s.Replace("˃˂", "─");
+        s = s.Replace("˄˅", "│");
+        s = s.Replace("˅˄", "│");
+        s = s.Replace("˃˅", "┌");
+        s = s.Replace("˅˃", "┌");
+        s = s.Replace("˂˅", "┐");
+        s = s.Replace("˅˂", "┐");
+        s = s.Replace("˃˄", "└");
+        s = s.Replace("˄˃", "└");
+        s = s.Replace("˂˄", "┘");
+        s = s.Replace("˄˂", "┘");
+        s = s.Replace("─˄", "┴");
+        s = s.Replace("˄─", "┴");
+        s = s.Replace("─˅", "┬");
+        s = s.Replace("˅─", "┬");
+        s = s.Replace("│˂", "┤");
+        s = s.Replace("˂│", "┤");
+        s = s.Replace("│˃", "├");
+        s = s.Replace("˃│", "├");
+        s = s.Replace("┌˄", "├");
+        s = s.Replace("˄┌", "├");
+        s = s.Replace("┌˂", "┬");
+        s = s.Replace("˂┌", "┬");
+        s = s.Replace("┐˄", "┤");
+        s = s.Replace("˄┐", "┤");
+        s = s.Replace("┐˃", "┬");
+        s = s.Replace("˃┐", "┬");
+        s = s.Replace("└˂", "┴");
+        s = s.Replace("˂└", "┴");
+        s = s.Replace("└˅", "├");
+        s = s.Replace("˅└", "├");
+        s = s.Replace("┘˅", "┤");
+        s = s.Replace("˅┘", "┤");
+        s = s.Replace("┘˃", "┴");
+        s = s.Replace("˃┘", "┴");
+        s = s.Replace("˂├", "┼");
+        s = s.Replace("├˂", "┼");
+        s = s.Replace("˄┬", "┼");
+        s = s.Replace("┬˄", "┼");
+        s = s.Replace("˃┤", "┼");
+        s = s.Replace("┤˃", "┼");
+        s = s.Replace("˅┴", "┼");
+        s = s.Replace("┴˅", "┼");
+        s = s.Replace(" ", "");
+        return s;
+    }
+
+    string LocationName (int x) {
+        List<string> colLet = new List<string> {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        List<string> rowNum = new List<string> {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26"};
+
+        int c = x/size;
+        int r = x%size;
+
+        return colLet[r] + "" + rowNum[c];
     }
 
     //twitch plays
@@ -330,4 +418,5 @@ public class echolocationScript : MonoBehaviour {
         }
         yield break;
     }
+
 }
