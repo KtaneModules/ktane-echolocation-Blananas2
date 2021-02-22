@@ -76,13 +76,14 @@ public class echolocationScript : MonoBehaviour {
         exitPos = UnityEngine.Random.Range(0, size*size);
         direction = UnityEngine.Random.Range(0, 4);
         if (keyPos == exitPos) {
-            exitPos = 35 - keyPos;
+            exitPos = (size*size-1) - keyPos;
         }
 
         maze = MazeGenerator.GenerateMaze(size, size);
         smaze = MazeToString(maze);
         xmaze = smaze.Replace("\n", "");
         Debug.LogFormat("[Echolocation #{0}] Maze:\n{1}", moduleId, smaze);
+        Debug.LogFormat("[Echolocation #{0}] # THE MAZE STOPS HERE #", moduleId);
 
         Debug.LogFormat("[Echolocation #{0}] Player Position: {1}", moduleId, LocationName(playerPos));
         Debug.LogFormat("[Echolocation #{0}] Key Position: {1}", moduleId, LocationName(keyPos));
