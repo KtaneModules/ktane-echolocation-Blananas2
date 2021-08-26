@@ -239,7 +239,11 @@ public class echolocationScript : MonoBehaviour {
     }
 
     IEnumerator Echo() {
-        playingSound = true;
+        if (!playingSound) {
+            playingSound = true;
+        } else {
+            yield return null;
+        }
         while (hitWall == false) {
             if (halfSeconds % 2 == 0 && halfSeconds != 0) {
                 switch (direction) {
