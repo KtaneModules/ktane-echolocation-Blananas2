@@ -39,7 +39,6 @@ public class echolocationScript : MonoBehaviour {
     char tile = '?';
     int tilePlace = -1;
     bool keyGet = false;
-    bool playingSound = false;
 
     private Coroutine buttonHold;
 	private bool holding = false;
@@ -93,7 +92,6 @@ public class echolocationScript : MonoBehaviour {
 	}
 
     void movePress (KMSelectable move) {
-        if (playingSound == false) {
             move.AddInteractionPunch();
             GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
             if (move == moves[0]) { //U
@@ -178,7 +176,7 @@ public class echolocationScript : MonoBehaviour {
             } else {
                 Debug.LogFormat("[Echolocation #{0}] Bug found, let Blan know immediately. (movePress reached the bottom of if statement)", moduleId);
             }
-        }
+        
     }
 
     void CenterPress () {
@@ -209,7 +207,6 @@ public class echolocationScript : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(.4f);
         StopCoroutine(startEcho);
-        playingSound = false;
 		holding = true;
         if (playerPos == keyPos) {
             keyGet = true;
@@ -239,11 +236,8 @@ public class echolocationScript : MonoBehaviour {
     }
 
     IEnumerator Echo() {
-        if (!playingSound) {
-            playingSound = true;
-        } else {
-            yield return null;
-        }
+        string wave = "";
+
         while (hitWall == false) {
             if (halfSeconds % 2 == 0 && halfSeconds != 0) {
                 switch (direction) {
@@ -271,21 +265,34 @@ public class echolocationScript : MonoBehaviour {
 
             if (halfSeconds % 2 == 0) { //OBJECTS
                 if (echoPos == keyPos) {
-                    Audio.PlaySoundAtTransform("key", transform);
+                    wave += "k";
+                    //Audio.PlaySoundAtTransform("key", transform);
                 } else if (echoPos == exitPos) {
-                    Audio.PlaySoundAtTransform("exit", transform);
+                    wave += "e";
+                    //Audio.PlaySoundAtTransform("exit", transform);
+                } else {
+                    wave += "-";
                 }
             } else { //WALLS
                 echoPlace = symbols.IndexOf(echoTile);
                 if (validMoves[direction][echoPlace] == 'X') {
-                    Audio.PlaySoundAtTransform("wall", transform);
+                    //Audio.PlaySoundAtTransform("wall", transform);
                     hitWall = true;
-                    yield return new WaitForSeconds(3f);
-                    playingSound = false;
+                    wave += "w";
+                } else {
+                    wave += "-";
                 }
             }
-
             halfSeconds += 1;
+        }
+
+        for (int h = 0; h < wave.Length; h++) {
+            switch (wave[h]) {
+                case 'k': Audio.PlaySoundAtTransform("key", transform); break;
+                case 'e': Audio.PlaySoundAtTransform("exit", transform); break;
+                case 'w': Audio.PlaySoundAtTransform("wall", transform); break;
+                default: break;
+            }
             yield return new WaitForSeconds(.5f);
         }
     }
@@ -416,9 +423,6 @@ public class echolocationScript : MonoBehaviour {
                 if (command.Length > 1) yield return "strikemessage input #" + (i+1);
                 moves[Array.IndexOf(valids, command.ElementAt(i) + "") % 5].OnInteract();
                 yield return new WaitForSeconds(0.2f);
-            }
-            while (playingSound) {
-                yield return new WaitForSeconds(.1f);
             }
         }
         yield break;
