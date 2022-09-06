@@ -78,8 +78,8 @@ GameObject:
   - component: {fileID: 114666103803507680}
   - component: {fileID: 114473772105538588}
   - component: {fileID: 114424070098223452}
-  - component: {fileID: 114564353563082406}
   - component: {fileID: 114932631429085752}
+  - component: {fileID: 114175957282031404}
   m_Layer: 0
   m_Name: echolocation
   m_TagString: Untagged
@@ -846,6 +846,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
+--- !u!114 &114175957282031404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231004898807958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4458ead11767cb479e2818c54a149d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Module: {fileID: 114473772105538588}
+  Bomb: {fileID: 114666103803507680}
+  Audio: {fileID: 114680543733163328}
+  MoveSels:
+  - {fileID: 114568680569073332}
+  - {fileID: 114091357224613720}
+  - {fileID: 114423455088967864}
+  - {fileID: 114116329967822422}
+  Center: {fileID: 114311877998329882}
+  WhiteMat: {fileID: 2100000, guid: 4ebde5f14d5fc714fb30f763722f2d31, type: 2}
+  ModuleObj: {fileID: 1330274185668286}
+  ButtonParentObj: {fileID: 1816478056868608}
+  ModSettings: {fileID: 114932631429085752}
 --- !u!114 &114222989200688788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1014,30 +1038,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/DiffuseTint
---- !u!114 &114564353563082406
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1231004898807958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4458ead11767cb479e2818c54a149d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Module: {fileID: 114473772105538588}
-  Bomb: {fileID: 114666103803507680}
-  Audio: {fileID: 114680543733163328}
-  MoveSels:
-  - {fileID: 114568680569073332}
-  - {fileID: 114091357224613720}
-  - {fileID: 114423455088967864}
-  - {fileID: 114116329967822422}
-  Center: {fileID: 114311877998329882}
-  WhiteMat: {fileID: 2100000, guid: 4ebde5f14d5fc714fb30f763722f2d31, type: 2}
-  ModuleObj: {fileID: 1330274185668286}
-  ButtonParentObj: {fileID: 1816478056868608}
-  ModSettings: {fileID: 114932631429085752}
 --- !u!114 &114568680569073332
 MonoBehaviour:
   m_ObjectHideFlags: 1

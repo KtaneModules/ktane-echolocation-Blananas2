@@ -8,7 +8,7 @@ using Rnd = UnityEngine.Random;
 using System.Reflection;
 using Newtonsoft.Json;
 
-public class EcholocationScript : MonoBehaviour
+public class echolocationScript : MonoBehaviour
 {
     public KMBombModule Module;
     public KMBombInfo Bomb;
@@ -62,8 +62,8 @@ public class EcholocationScript : MonoBehaviour
         _keyPosition = positions[1];
         _exitPosition = positions[2];
         var tempMazeArr = _mazeString.ToCharArray();
-        tempMazeArr[_keyPosition] = 'K';
-        tempMazeArr[_exitPosition] = 'E';
+        tempMazeArr[_keyPosition] = 'k';
+        tempMazeArr[_exitPosition] = 'e';
         _mazeString = tempMazeArr.Join("");
         LogMaze();
         Debug.LogFormat("[Echolocation #{0}] Your starting position is at {1} and you are facing {2}.", _moduleId, GetCoord(_currentPosition), _directionNames[_direction]);
@@ -128,7 +128,7 @@ public class EcholocationScript : MonoBehaviour
         var maze = new string[(_size * 2 + 1)];
         for (int i = 0; i < maze.Length; i++)
             maze[i] = _mazeString.Substring(i * (_size * 2 + 1), _size * 2 + 1);
-        Debug.LogFormat("[Echolocation #{0}] Maze: (Key = K, Exit = E)", _moduleId);
+        Debug.LogFormat("[Echolocation #{0}] Maze: (Key = k, Exit = e)", _moduleId);
         for (int i = 0; i < maze.Length; i++)
             Debug.LogFormat("[Echolocation #{0}] {1}", _moduleId, maze[i]);
     }
@@ -141,17 +141,17 @@ public class EcholocationScript : MonoBehaviour
 
     private void CenterHold()
     {
-        if (_mazeString[_currentPosition] == 'K')
+        if (_mazeString[_currentPosition] == 'k')
         {
             var tempMazeArr = _mazeString.ToCharArray();
-            tempMazeArr[_keyPosition] = '.';
+            tempMazeArr[_keyPosition] = ' ';
             _mazeString = tempMazeArr.Join("");
             _keyCollected = true;
             Debug.LogFormat("[Echolocation #{0}] You are at the key and you've picked it up.", _moduleId);
             Center.AddInteractionPunch(0.5f);
             return;
         }
-        if (_mazeString[_currentPosition] == 'E')
+        if (_mazeString[_currentPosition] == 'e')
         {
             if (_keyCollected)
             {
@@ -188,7 +188,7 @@ public class EcholocationScript : MonoBehaviour
 
     private bool CheckMovement(int pos, int dir)
     {
-        return _mazeString[pos + GetMoveOffset(dir)] != '#';
+        return _mazeString[pos + GetMoveOffset(dir)] != '█';
     }
 
     private IEnumerator PlayNoises()
@@ -198,11 +198,11 @@ public class EcholocationScript : MonoBehaviour
         var offset = GetMoveOffset(_direction);
         while (true)
         {
-            if (_mazeString[index] == 'K')
+            if (_mazeString[index] == 'k')
                 Audio.PlaySoundAtTransform("key", transform);
-            if (_mazeString[index] == 'E')
+            if (_mazeString[index] == 'e')
                 Audio.PlaySoundAtTransform("exit", transform);
-            if (_mazeString[index] == '#')
+            if (_mazeString[index] == '█')
             {
                 Audio.PlaySoundAtTransform("wall", transform);
                 yield break;
