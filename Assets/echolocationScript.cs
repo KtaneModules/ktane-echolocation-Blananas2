@@ -277,7 +277,7 @@ public class echolocationScript : MonoBehaviour
             yield break;
         }
 
-        string[] valids = { "u", "l", "d", "r", "c", "f", "useless", "b" };
+        string[] valids = { "u", "r", "d", "l", "c", "f", "useless", "b" };
         command = command.Replace(" ", "");
         command = command.ToLower();
         for (int i = 0; i < command.Length; i++)
