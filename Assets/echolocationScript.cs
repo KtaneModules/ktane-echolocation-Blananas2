@@ -35,6 +35,7 @@ public class echolocationScript : MonoBehaviour
     private int _keyPosition;
     private int _exitPosition;
     private bool _keyCollected;
+    private bool _moduleStarted;
 
     public class ModSettingsJSON
     {
@@ -53,6 +54,11 @@ public class echolocationScript : MonoBehaviour
 
         _size = GetSize();
 
+        GenerateMaze();
+    }
+
+    private void GenerateMaze()
+    {
         _mazeGenerator = new MazeGenerator(_size);
         _mazeString = _mazeGenerator.GenerateMaze();
 
@@ -73,6 +79,7 @@ public class echolocationScript : MonoBehaviour
     {
         if (_moduleSolved)
             return false;
+        _moduleStarted = true;
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
         Center.AddInteractionPunch(0.5f);
         StartCoroutine(PlayNoises());
@@ -96,6 +103,7 @@ public class echolocationScript : MonoBehaviour
         {
             if (_moduleSolved)
                 return false;
+            _moduleStarted = true;
             Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
             MoveSels[btn].AddInteractionPunch(0.5f);
             if (btn != 0)
@@ -264,13 +272,53 @@ public class echolocationScript : MonoBehaviour
     }
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} u/d/l/r/c [Presses the button(s) in the specified position(s)] | !{0} hold/h [Holds the center button]";
+    private readonly string TwitchHelpMessage = @"!{0} u/d/l/r/c [Presses the button(s) in the specified position(s)] | !{0} hold/h [Holds the center button] | !{0} size <#> [Sets the size of the maze to '#' by '#']";
 #pragma warning restore 414
     IEnumerator ProcessTwitchCommand(string command)
     {
+        if (Regex.IsMatch(command, @"^\s*size \d+\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            string missionId = GetMissionID();
+            int cmdSize = int.Parse(command.Replace("size ", ""));
+            if (cmdSize < 2)
+            {
+                yield return "sendtochaterror You cannot set the size to be smaller than 2!";
+                yield break;
+            }
+            else if (cmdSize > 26)
+            {
+                yield return "sendtochaterror You cannot set the size to be greater than 26!";
+                yield break;
+            }
+            else if (missionId != "undefined" && missionId != "custom")
+            {
+                yield return "sendtochaterror The size cannot be changed on a mission!";
+                yield break;
+            }
+            else if (_moduleStarted)
+            {
+                yield return "sendtochaterror A button has been pressed, the size can no longer be changed!";
+                yield break;
+            }
+            else if (cmdSize == _size)
+            {
+                yield return "sendtochaterror The maze is already set to this size!";
+                yield break;
+            }
+            yield return "sendtochat Maze size has been set to " + cmdSize + ".";
+            Debug.LogFormat("[Echolocation #{0}] Twitch Plays has requested a maze size change, regenerating module.", _moduleId);
+            Debug.LogFormat("[Echolocation #{0}] Generating maze with size of {1}.", _moduleId, cmdSize);
+            _size = cmdSize;
+            GenerateMaze();
+            yield break;
+        }
+
         if (Regex.IsMatch(command, @"^\s*hold\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) || Regex.IsMatch(command, @"^\s*h\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             yield return null;
+            if (_size != 4 && _keyCollected && _mazeString[_currentPosition] == 'e')
+                yield return "awardpointsonsolve " + ((_size - 4) * 6);
             Center.OnInteract();
             yield return new WaitForSeconds(1f);
             Center.OnInteractEnded();
