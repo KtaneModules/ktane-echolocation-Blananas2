@@ -109,7 +109,7 @@ public class echolocationScript : MonoBehaviour
             if (btn != 0)
             {
                 _direction = (_direction + btn) % 4;
-                Debug.LogFormat("[Echolocation #{0}] {1}) Now facing {2}.", _moduleId, "LDR"[btn - 1], _directionNames[_direction]);
+                Debug.LogFormat("[Echolocation #{0}] {1}) Now facing {2}.", _moduleId, "RDL"[btn - 1], _directionNames[_direction]);
                 return false;
             }
             var validMove = CheckMovement(_currentPosition, _direction);
