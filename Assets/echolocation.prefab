@@ -24,7 +24,9 @@ GameObject:
   - component: {fileID: 114311877998329882}
   - component: {fileID: 114020352901740504}
   - component: {fileID: 135885785740092696}
-  m_Layer: 0
+  - component: {fileID: 114469626071069358}
+  - component: {fileID: 114191721100993860}
+  m_Layer: 11
   m_Name: center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +83,7 @@ GameObject:
   - component: {fileID: 114932631429085752}
   - component: {fileID: 114175957282031404}
   m_Layer: 0
-  m_Name: echolocation
+  m_Name: Echolocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -870,6 +872,19 @@ MonoBehaviour:
   ModuleObj: {fileID: 1330274185668286}
   ButtonParentObj: {fileID: 1816478056868608}
   ModSettings: {fileID: 114932631429085752}
+--- !u!114 &114191721100993860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1007362886631938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a373c64243ab994d82b0b45811eb5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Selectable: {fileID: 0}
+  Colliders: []
 --- !u!114 &114222989200688788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -998,6 +1013,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/DiffuseTint
+--- !u!114 &114469626071069358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1007362886631938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a373c64243ab994d82b0b45811eb5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Selectable: {fileID: 0}
+  Colliders: []
 --- !u!114 &114469657004102618
 MonoBehaviour:
   m_ObjectHideFlags: 1
